@@ -49,3 +49,4 @@ import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
   exports: [AppService],
 })
 export class AppModule {}
+
