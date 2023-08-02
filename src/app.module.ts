@@ -27,12 +27,12 @@ import { UserEntity } from './user/entity/user.entity';
         host: 'smtp.ethereal.email',
         port: 587,
         auth: {
-            user: 'nicola34@ethereal.email',
-            pass: 'SjA7Ws5a9hX2EpT72W'
+            user: 'evert.funk66@ethereal.email',
+            pass: '6bCsQBpWj8E9C623YA'
         }
       },
       defaults: {
-        from: '"nest-modules" <nicola34@ethereal.email>',
+        from: '"nest-modules" <evert.funk66@ethereal.email>',
       },
       template: {
         dir: __dirname + '/templates',
