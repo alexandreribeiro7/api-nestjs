@@ -4,8 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
-  ParseIntPipe,
   Patch,
   Post,
   Put,
@@ -23,8 +21,10 @@ import { Role } from 'src/enums/role.enum';
 import { RoleGuard } from 'src/guards/role.guard';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ApiTags } from '@nestjs/swagger';
 
-@Roles(Role.Admin)
+@ApiTags('users')
+@Roles(Role.Admin, Role.User)
 @UseGuards(ThrottlerModule, AuthGuard, RoleGuard)
 @UseInterceptors(LogInterceptor)
 @Controller('users')
