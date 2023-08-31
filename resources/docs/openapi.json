@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "NestJS Login - OpenAPI 3.0",
-    "description": "Está documentação com swagger descreve com detalhes cada endpoint e estrutura de entidades presentes na sua aplicação.",
+    "description": "Esta documentação com swagger descreve com detalhes cada endpoint e estrutura de entidades presentes na sua aplicação.",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "url": "https://alexandredev.netlify.app/"
@@ -23,10 +23,12 @@
     }
   ],
   "paths": {
-    "/users": {
+    "/user": {
       "post": {
-        "tags": ["Users"],
-        "summary": "Cadastrar usuarios",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Cadastrar usuários",
         "description": "envia dados para cadastro de um usuario",
         "operationId": "post-cadastro",
         "requestBody": {
@@ -43,8 +45,7 @@
                     "email": "fulanodetal@gmail.com",
                     "password": "Senha@123456",
                     "birthAt": "2010-07-30T16:25:43.511Z",
-                    "role": 2,
-                    "usuario_id": 1
+                    "role": 2
                   }
                 }
               }
@@ -71,11 +72,320 @@
                       "name": "Anthony souza",
                       "email": "Anthonysouza@gmail.com",
                       "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
-                      "birthAt": null,
+                      "birthAt": "1989-03-18T00:00:00.000Z",
                       "id": 15,
                       "createdAt": "2023-07-26T01:59:43.576Z",
                       "updatedAt": "2023-07-26T01:59:43.576Z",
                       "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Obter usuários",
+        "description": "Obtem todos os usuário e seus dados",
+        "operationId": "Get-Usuários",
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "Anthony souza",
+                      "email": "Anthonysouza@gmail.com",
+                      "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
+                      "birthAt": "1989-03-18T00:00:00.000Z",
+                      "id": 15,
+                      "createdAt": "2023-07-26T01:59:43.576Z",
+                      "updatedAt": "2023-07-26T01:59:43.576Z",
+                      "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Obter usuário por id",
+        "description": "Obtem um usuário por id",
+        "operationId": "Get-Usuario",
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "Anthony souza",
+                      "email": "Anthonysouza@gmail.com",
+                      "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
+                      "birthAt": "1989-03-18T00:00:00.000Z",
+                      "id": 15,
+                      "createdAt": "2023-07-26T01:59:43.576Z",
+                      "updatedAt": "2023-07-26T01:59:43.576Z",
+                      "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Atualizar todos os dados de um usuário",
+        "description": "Atualizar todos dados de um usuário por id",
+        "operationId": "Put-Usuario",
+        "requestBody": {
+          "description": "Todos os campos são obrigatórios para atualizar todos os dados de um usuário.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {
+                    "name": "Anthony souza",
+                    "email": "Anthonysouza@gmail.com",
+                    "password": "Raf@32453430",
+                    "birthAt": "1989-03-18T00:00:00.000Z",
+                    "id": 15,
+                    "createdAt": "2023-07-26T01:59:43.576Z",
+                    "updatedAt": "2023-07-26T01:59:43.576Z",
+                    "role": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist."
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "Anthony souza",
+                      "email": "Anthonysouza@gmail.com",
+                      "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
+                      "birthAt": "1989-03-18T00:00:00.000Z",
+                      "id": 15,
+                      "createdAt": "2023-07-26T01:59:43.576Z",
+                      "updatedAt": "2023-07-26T01:59:43.576Z",
+                      "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Atualizar dados parciais do usuário",
+        "description": "Atualizar dados parciais de um usuário por id",
+        "operationId": "Patch-Usuario",
+        "requestBody": {
+          "description": "Atualizar dados parciais de um usuário por id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {
+                    "name": "Anthony souza",
+                    "email": "Anthonysouza@gmail.com",
+                    "password": "Raf@32453430",
+                    "birthAt": "1989-03-18T00:00:00.000Z",
+                    "id": 15,
+                    "createdAt": "2023-07-26T01:59:43.576Z",
+                    "updatedAt": "2023-07-26T01:59:43.576Z",
+                    "role": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist."
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "Anthony souza",
+                      "email": "Anthonysouza@gmail.com",
+                      "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
+                      "birthAt": "1989-03-18T00:00:00.000Z",
+                      "id": 15,
+                      "createdAt": "2023-07-26T01:59:43.576Z",
+                      "updatedAt": "2023-07-26T01:59:43.576Z",
+                      "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Deletar um usuário",
+        "description": "Deletar um usuário por id",
+        "operationId": "Delete-Usuario",
+        "requestBody": {
+          "description": "Deletar um usuário por id",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist."
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "raw": []
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth Login"
+        ],
+        "summary": "Autenticar e fazer login do usuário",
+        "description": "Autenticar e fazer login do usuário",
+        "operationId": "Post-usuário",
+        "requestBody": {
+          "description": "Autenticar e fazer login do usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {
+                    "name": "Anthony souza",
+                    "email": "Anthonysouza@gmail.com",
+                    "password": "Raf@32453430",
+                    "birthAt": "1989-03-18T00:00:00.000Z",
+                    "id": 15,
+                    "createdAt": "2023-07-26T01:59:43.576Z",
+                    "updatedAt": "2023-07-26T01:59:43.576Z",
+                    "role": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Invalid iD."
+          },
+          "404": {
+            "description": "The user does not exist."
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlJhZmFlbCBNb3VyYSIsImVtYWlsIjoicmFmYWVsQGdtYWlsLmNvbSIsImlhdCI6MTY5MzQ0Mzc1MSwiZXhwIjoxNjk0MDQ4NTUxLCJhdWQiOiJ1c2VycyIsImlzcyI6ImxvZ2luIiwic3ViIjoiMiJ9._08rtl14sRBgeyLmNXik0z5pw31S352rFv_qkW3WBJg"
                     }
                   }
                 }
@@ -111,49 +421,30 @@
             "type": "string",
             "description": "Senha do usuario",
             "minLength": 6,
-            "minUppercase": 1,
-            "minLowercase": 1,
             "example": "Senha@123456"
           },
           "birthAt": {
             "type": "string",
             "description": "Data de aniversario",
-            "format": "date-string",
+            "format": "date-time",
             "example": "2023-07-26T01:59:43.576Z"
           },
           "role": {
             "type": "number",
             "description": "1 para usuario e 2 para usuario administrativo",
-            "format": "number",
-            "example": "2"
+            "example": 2
           },
-          "Id": {
+          "id": {
             "type": "number",
             "description": "Id do usuario",
-            "format": "number",
-            "example": "2"
+            "example": 2
           }
         },
-        "required": ["name", "email", "password"]
-      }
-    },
-    "securitySchemes": {
-      "petstore_auth": {
-        "type": "oauth2",
-        "flows": {
-          "implicit": {
-            "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-            "scopes": {
-              "write:pets": "modify pets in your account",
-              "read:pets": "read your pets"
-            }
-          }
-        }
-      },
-      "api_key": {
-        "type": "apiKey",
-        "name": "api_key",
-        "in": "header"
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
       }
     }
   }

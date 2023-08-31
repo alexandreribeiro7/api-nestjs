@@ -10,30 +10,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserService {
-  login: any;
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>
   ) {}
 
   async create(data: CreateUserDTO) {
+    const userExists = await this.userRepository.findOne( {where:{ email: data.email }});
 
-      if (await this.userRepository.exist({
-        where: { 
-          email: data.email 
-        }
-      })) {
-        throw new BadRequestException('This email already exists.')
-      }
+    if (userExists) {
+      throw new BadRequestException('This email already exists.');
+    }
 
     const salt = await bcrypt.genSalt();
-
-    data.password = await bcrypt.hash(data.password, salt)
-
+    data.password = await bcrypt.hash(data.password, salt);
     const user = this.userRepository.create(data);
-
-    return this.userRepository.save(user)
-
+    return this.userRepository.save(user);
   }
 
   async list() {
@@ -49,69 +41,50 @@ export class UserService {
 
   async update(id: number, { email, name, password, birthAt, role }: UpdatePutDTO) {
     await this.exists(id);
+    const updatedData: Partial<UserEntity> = {};
 
-    const salt = await bcrypt.genSalt();
-
-    password = await bcrypt.hash(password, salt)
-
-    await this.userRepository.update(id, {
-        email,
-        name,
-        password,
-        birthAt: birthAt ? new Date(birthAt) : null, 
-        role
-      });
-
-      return this.show(id);
+    if (email) updatedData.email = email;
+    if (name) updatedData.name = name;
+    if (password) {
+      const salt = await bcrypt.genSalt();
+      updatedData.password = await bcrypt.hash(password, salt);
     }
+    if (birthAt) updatedData.birthAt = new Date(birthAt);
+    if (role) updatedData.role = role;
+
+    await this.userRepository.update(id, updatedData);
+    return this.show(id);
+  }
   async updatePartial(
     id: number,
     { email, name, password, birthAt, role }: UpdatePartialDTO,
   ) {
     await this.exists(id);
+    const updatedData: Partial<UserEntity> = {};
 
-    const data: any = {};
-
-    if (birthAt) {
-      data.birthAt = new Date(birthAt);
-    }
-
-    if (email) {
-      data.email = email;
-    }
-
-    if (name) {
-      data.name = name;
-    }
-
+    if (email) updatedData.email = email;
+    if (name) updatedData.name = name;
     if (password) {
       const salt = await bcrypt.genSalt();
-      data.password = await bcrypt.hash(password, salt)
+      updatedData.password = await bcrypt.hash(password, salt);
     }
+    if (birthAt) updatedData.birthAt = new Date(birthAt);
+    if (role) updatedData.role = role;
 
-    if (role) {
-      data.role = role;
-    }
-
-    await this.userRepository.update(id, data);
-
+    await this.userRepository.update(id, updatedData);
     return this.show(id);
   }
 
   async delete(id: number) {
     await this.exists(id);
-
     return this.userRepository.delete(id);
   }
 
-  async exists(id: number) {
+  private async exists(id: number) {
+    const userExists = await this.userRepository.findOne( {where:{ id }});
 
-    if (!(await this.userRepository.exist({
-      where: {
-        id
-      }
-    }))) {
-      throw new NotFoundException(`The user does not exist.`);
+    if (!userExists) {
+      throw new NotFoundException('The user does not exist.');
     }
   }
 }
