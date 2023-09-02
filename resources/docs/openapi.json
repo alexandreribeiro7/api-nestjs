@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "NestJS Login - OpenAPI 3.0",
-    "description": "Esta documentação com swagger descreve com detalhes cada endpoint e estrutura de entidades presentes na sua aplicação.",
+    "description": "Esta documentação com swagger descreve com detalhes cada endpoint e estrutura de entidades presentes na sua aplicação. Documentação em processo de desenvolvimento junto à aplicação ",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "url": "https://alexandredev.netlify.app/"
@@ -25,11 +25,9 @@
   "paths": {
     "/user": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Cadastrar usuários",
-        "description": "envia dados para cadastro de um usuario",
+        "description": "envia dados para cadastro de um usuário",
         "operationId": "post-cadastro",
         "requestBody": {
           "description": "Envia dados de cadastro",
@@ -88,9 +86,7 @@
     },
     "/users": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Obter usuários",
         "description": "Obtem todos os usuário e seus dados",
         "operationId": "Get-Usuários",
@@ -127,9 +123,7 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Obter usuário por id",
         "description": "Obtem um usuário por id",
         "operationId": "Get-Usuario",
@@ -164,9 +158,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Atualizar todos os dados de um usuário",
         "description": "Atualizar todos dados de um usuário por id",
         "operationId": "Put-Usuario",
@@ -227,9 +219,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Atualizar dados parciais do usuário",
         "description": "Atualizar dados parciais de um usuário por id",
         "operationId": "Patch-Usuario",
@@ -290,9 +280,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Deletar um usuário",
         "description": "Deletar um usuário por id",
         "operationId": "Delete-Usuario",
@@ -339,9 +327,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth Login"
-        ],
+        "tags": ["Auth Login"],
         "summary": "Autenticar e fazer login do usuário",
         "description": "Autenticar e fazer login do usuário",
         "operationId": "Post-usuário",
@@ -373,6 +359,9 @@
           "400": {
             "description": "Invalid iD."
           },
+          "401": {
+            "description": "Invalid email or password."
+          },
           "404": {
             "description": "The user does not exist."
           },
@@ -386,6 +375,298 @@
                   "Example 1": {
                     "value": {
                       "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlJhZmFlbCBNb3VyYSIsImVtYWlsIjoicmFmYWVsQGdtYWlsLmNvbSIsImlhdCI6MTY5MzQ0Mzc1MSwiZXhwIjoxNjk0MDQ4NTUxLCJhdWQiOiJ1c2VycyIsImlzcyI6ImxvZ2luIiwic3ViIjoiMiJ9._08rtl14sRBgeyLmNXik0z5pw31S352rFv_qkW3WBJg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/photo": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Update photo",
+        "description": "Update de fotos",
+        "operationId": "Post-photos",
+        "requestBody": {
+          "description": "Fazer update de photos em jpeg",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {
+                    "file": "image/jpeg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Validation failed (expected type is image/jpeg)"
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "sucess": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/files-fields": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Salvar vários arquivos diferentes formatos",
+        "description": "Nesse request você pode salvar vários arquivos de diferentes formatos e tamanho jpeg/png/docs/winrar/etc..",
+        "operationId": "Post-files",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Obter usuarios": {
+                  "value": {
+                    "file": "image/jpeg"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Validation failed (expected type is image/jpeg)"
+          },
+          "200 OK": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "sucess": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Cadastrar usuários novos",
+        "description": "envia dados para cadastro de um usuário novo",
+        "operationId": "post-register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Cadastro usuario": {
+                  "value": {
+                    "name": "Fulano de Tal Pereira",
+                    "email": "fulanodetal@gmail.com",
+                    "password": "Senha@123456",
+                    "birthAt": "2010-07-30T16:25:43.511Z",
+                    "role": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created."
+          },
+          "400": {
+            "description": "This email already exists."
+          },
+          "404": {
+            "description": "The user does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlJhZmFlbCBNb3VyYSIsImVtYWlsIjoicmFmYWVsQGdtYWlsLmNvbSIsImlhdCI6MTY5MzQ0Mzc1MSwiZXhwIjoxNjk0MDQ4NTUxLCJhdWQiOiJ1c2VycyIsImlzcyI6ImxvZ2luIiwic3ViIjoiMiJ9._08rtl14sRBgeyLmNXik0z5pw31S352rFv_qkW3WBJg"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Autenticar usuário já logado",
+        "description": "Autentica e retorna o usuário logado",
+        "operationId": "post-me",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Cadastro usuario": {
+                  "value": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "Anthony souza",
+                      "email": "Anthonysouza@gmail.com",
+                      "password": "$2b$10$hnGTnP/RVq8TtfRSn2YvEOCH3UH3DJMhxYG0mxM5krpc7A0BRAYcO",
+                      "birthAt": "1989-03-18T00:00:00.000Z",
+                      "id": 15,
+                      "createdAt": "2023-07-26T01:59:43.576Z",
+                      "updatedAt": "2023-07-26T01:59:43.576Z",
+                      "role": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/forget": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Resetar senha do usuário",
+        "description": "Resetar a senha do usuário",
+        "operationId": "post-forget",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Cadastro usuario": {
+                  "value": {
+                    "email": "rafael@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created."
+          },
+          "401": {
+            "description": "Invalid email.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 2,
+                      "name": "Rafael Moura",
+                      "email": "rafael@gmail.com",
+                      "password": "$2b$10$gTMpGQFJ49vIC/g.VnQcD./RY3TgebTdHuNn/GixtJybwthtb4TkS",
+                      "birthAt": "2010-07-30",
+                      "createdAt": "2023-08-31T01:01:42.044Z",
+                      "updatedAt": "2023-09-02T00:15:51.520Z",
+                      "role": 2
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset": {
+      "post": {
+        "tags": ["Auth Login"],
+        "summary": "Recuperar senha do usuário",
+        "description": "Recuperar a senha do usuário",
+        "operationId": "post-reset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDTO"
+              },
+              "examples": {
+                "Cadastro usuario": {
+                  "value": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsImlhdCI6MTY5MTAxODM5OCwiZXhwIjoxNjkxMDIwMTk4LCJhdWQiOiJ1c2VycyIsImlzcyI6ImZvcmdldCIsInN1YiI6IjEwIn0.RSubiADfDLe0cJmYE-blnE_KoiUU-5wR2WJcd_gdaog",
+                    "password": "Novasenh@32453430"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created."
+          },
+          "400": {
+            "description": "jwt expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDTO"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "sucess": true
                     }
                   }
                 }
@@ -440,11 +721,7 @@
             "example": 2
           }
         },
-        "required": [
-          "name",
-          "email",
-          "password"
-        ]
+        "required": ["name", "email", "password"]
       }
     }
   }

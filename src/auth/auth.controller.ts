@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Body, Headers, Controller, Post, UseGuards, Req, UseInterceptors, UploadedFile, BadRequestException, ParseFilePipe, FileTypeValidator, MaxFileSizeValidator } from "@nestjs/common";
+import { Body, Headers, Controller, Post, UseGuards, Req, UseInterceptors, UploadedFile, BadRequestException, ParseFilePipe, FileTypeValidator, MaxFileSizeValidator, UploadedFiles } from "@nestjs/common";
 import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { AuthLoginDTO } from "./dto/auth.login.dto";
 import { AuthRegisterDTO } from "./dto/auth.register.dto";
@@ -12,6 +12,7 @@ import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
 import { join } from "path";
 import { FileService } from "file/file.service";
+import e from "express";
 
 @Controller('auth')
 export class AuthController {
@@ -78,20 +79,28 @@ export class AuthController {
     @UseGuards(AuthGuard)
     @Post('files')
     async uploadFiles(@User() user, @UploadedFile() files: Express.Multer.File) {
-        return files
-    }
-
-    @UseInterceptors(FileFieldsInterceptor([{
-        name: 'photo',
-        maxCount: 1
-    }, {
-        name: 'documents',
-        maxCount: 10
-    }]))
-    @UseGuards(AuthGuard)
-    @Post('files-fields')
-    async uploadFilesFields(@User() user, @UploadedFile() files: {photo: Express.Multer.File, documents: Express.Multer.File[]}) {
         return files;
     }
+
+    @UseInterceptors(
+        FileFieldsInterceptor([
+          { name: 'photo', maxCount: 1 },
+          { name: 'documents', maxCount: 10 },
+        ])
+      )
+      @UseGuards(AuthGuard)
+      @Post('files-fields')
+      async uploadFilesFields(
+        @User() user,
+        @UploadedFiles() files: { photo?: Express.Multer.File[]; documents?: Express.Multer.File[] }
+      ) {
+        if (!files.photo && (!files.documents || files.documents.length === 0)) {
+          throw new BadRequestException('Nenhum arquivo foi enviado. Por favor, envie pelo menos um arquivo.');
+        }
+    
+        // Processar os arquivos aqui se estiverem presentes
+    
+        return files;
+      }
 
 }
