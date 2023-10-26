@@ -19,7 +19,7 @@
   },
   "servers": [
     {
-      "url": "https://localhost3000/api/"
+      "url": "https://localhost:3000/api"
     }
   ],
   "paths": {
